@@ -1,40 +1,255 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ms. Kaple's Double-Click STEM Arcade</title>
 <style>
 @font-face{font-family:Homebody;src:url('./KAHomebodyClub.ttf') format('truetype');font-display:swap}@font-face{font-family:VAG;src:url('./VAGRoundedBold.ttf') format('truetype');font-display:swap}
-:root{--ink:#171717;--pink:#ff5b9f;--orange:#ff8b27;--yellow:#ffd83a;--green:#72d653;--blue:#43c1eb;--purple:#a152df}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:VAG,Arial,sans-serif;background:#f4f5f7;color:var(--ink);user-select:none}button{font:inherit}#shell{min-height:100vh;border:11px solid transparent;border-image:linear-gradient(90deg,#ff3b7d 0 14%,#ff7d1f 14% 28%,#ffd52b 28% 42%,#4ed163 42% 57%,#27b6e6 57% 71%,#7348e7 71% 86%,#ff3b7d 86%) 1;background:#fff}header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:10px 18px;border-bottom:5px solid #222;background:#fff}.brand{display:flex;align-items:flex-end;gap:10px;min-width:0}.ms{font-family:Homebody,VAG,sans-serif;font-size:clamp(30px,3.7vw,58px);white-space:nowrap}.arcade{font-size:clamp(26px,3.8vw,55px);line-height:.92;white-space:nowrap;background:linear-gradient(90deg,#f52c8b,#ff7a18,#f6cc15,#56c84d,#17aee5,#7240da,#e43ac4);-webkit-background-clip:text;background-clip:text;color:transparent}.nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.nav button{padding:8px 13px;min-height:43px;border:4px solid #222;border-radius:14px;background:#fff;box-shadow:0 3px 0 #222;cursor:pointer}.nav button:active{transform:translateY(2px);box-shadow:0 1px 0 #222}main{padding:14px}.view{display:none}.view.active{display:block}.home-note{text-align:center;font-size:clamp(17px,2vw,24px);margin:2px 0 12px}.game-grid{max-width:1420px;margin:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.game-card{border:5px solid #222;border-radius:20px;overflow:hidden;background:#fff;padding:0;cursor:pointer;box-shadow:0 5px 0 #222}.game-card:active{transform:translateY(3px);box-shadow:0 2px 0 #222}.game-card .bar{padding:9px;text-align:center;font-size:clamp(20px,2vw,32px)}.game-card .thumb{height:185px;border-top:4px solid #222;border-bottom:4px solid #222;background:#fff;display:grid;place-items:center;overflow:hidden}.game-card .thumb img{width:100%;height:100%;object-fit:contain}.game-card .desc{text-align:center;padding:7px 10px;font-size:16px}.saved{font-size:14px;opacity:.75;margin-top:3px}.c1 .bar{background:var(--pink)}.c2 .bar{background:var(--yellow)}.c3 .bar{background:var(--green)}.c4 .bar{background:var(--blue)}.c5 .bar{background:var(--purple)}.c6 .bar{background:var(--orange)}
-#gameTop{max-width:1420px;margin:0 auto 9px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px}#gameTitle{font-size:clamp(25px,3vw,40px)}.stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{border:4px solid #222;border-radius:999px;background:#fff;padding:6px 11px;font-size:17px}#direction{max-width:1420px;margin:0 auto 10px;border:4px solid #222;border-radius:17px;background:#fff;min-height:76px;padding:8px 12px;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;font-size:clamp(20px,2.1vw,30px)}#direction img{width:66px;height:58px;object-fit:contain}#stage{max-width:1420px;height:620px;margin:auto;border:5px solid #222;border-radius:22px;background:#f7fbff;position:relative;overflow:hidden}#toast{position:absolute;z-index:99;left:50%;top:16px;transform:translateX(-50%);border:4px solid #222;border-radius:15px;background:#fff;padding:8px 15px;font-size:22px;opacity:0;pointer-events:none;transition:.15s}#toast.show{opacity:1}.win{position:absolute;inset:0;z-index:90;background:rgba(255,255,255,.94);display:grid;place-items:center;text-align:center}.winbox{border:6px solid #222;border-radius:25px;background:#fff;padding:25px 38px;box-shadow:0 7px 0 #222}.win h2{font-size:clamp(50px,8vw,105px);margin:0;color:#8039d4}.win p{font-size:23px}.win button{border:4px solid #222;border-radius:14px;padding:10px 18px;background:#ffd83a;margin:5px;cursor:pointer}
-.catch-bg{position:absolute;inset:0;background:linear-gradient(#dff6ff 0 68%,#e9d3a8 68%)}.catch-target{position:absolute;border:0;background:transparent;padding:0;cursor:pointer;transition:left 1.10s ease-in-out,top 1.10s ease-in-out}.catch-target img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 2px rgba(0,0,0,.15))}.reveal{position:absolute;inset:14px;border-radius:16px;background:#1b0d32;overflow:hidden;display:grid;place-items:center}.reveal>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#1b0d32}.tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);gap:3px}.tile{border:0;cursor:pointer;background:linear-gradient(145deg,#8d46e5,#ff5ba7);outline:2px solid rgba(255,255,255,.7)}.tile:nth-child(3n+2){background:linear-gradient(145deg,#27b9ea,#6ddc64)}.tile:nth-child(3n){background:linear-gradient(145deg,#ffd42b,#ff7e1e)}.tile.gone{opacity:0;pointer-events:none;transition:.2s}
-.desktop{position:absolute;inset:15px;border:4px solid #222;border-radius:16px;background:linear-gradient(#8adfff 0 65%,#78d55d 65%);overflow:hidden}.taskbar{position:absolute;left:0;right:0;bottom:0;height:48px;background:#273646}.folders{position:absolute;inset:32px 30px 72px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:center}.folder{border:0;background:transparent;cursor:pointer;display:grid;justify-items:center;gap:3px}.folderpic{position:relative;width:180px;height:145px}.folderpic>img:first-child{width:100%;height:100%;object-fit:contain}.folderpic .badge{position:absolute;width:66px;height:58px;object-fit:contain;left:50%;top:50%;transform:translate(-50%,-45%);background:#fff;border:3px solid #222;border-radius:9px;padding:3px}.folderlabel{background:#fff;border:3px solid #222;border-radius:9px;padding:4px 8px}.fakewindow{position:absolute;z-index:60;width:min(760px,82%);left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:5px solid #222;border-radius:17px;box-shadow:0 15px 30px rgba(0,0,0,.25);overflow:hidden}.winbar{height:45px;background:#45bce8;border-bottom:4px solid #222;display:flex;justify-content:space-between;align-items:center;padding:0 12px;font-size:21px}.winbar button{width:38px;height:33px;border:3px solid #222;border-radius:8px;background:#ff6c80;cursor:pointer}.wincontent{text-align:center;padding:16px;font-size:21px}.wincontent img{width:180px;height:150px;object-fit:contain}
-.sceneWrap{position:absolute;inset:14px;border-radius:15px;overflow:hidden;background:#fff}.sceneWrap>img{width:100%;height:100%;object-fit:fill}.hotspot{position:absolute;border:0;background:transparent;cursor:pointer}.hotspot.good{outline:6px solid #56c94c;border-radius:13px;background:rgba(86,201,76,.12)}.hotspot.bad{outline:6px solid #ff5c76;border-radius:13px;background:rgba(255,92,118,.12)}
-.matchLayout{position:absolute;inset:15px;display:grid;grid-template-columns:.75fr 1.25fr;gap:14px}.matchTarget,.matchChoices{border:4px solid #222;border-radius:17px;background:#fff;padding:13px}.matchTarget{display:grid;place-items:center;text-align:center}.matchTarget img{width:230px;height:200px;object-fit:contain}.matchTarget h3{font-size:27px;margin:6px}.matchChoices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.matchChoice{border:4px solid #222;border-radius:15px;background:#f7fbff;cursor:pointer;display:grid;place-items:center;padding:8px}.matchChoice img{width:155px;height:135px;object-fit:contain}.collect{position:absolute;inset:15px;border:4px solid #222;border-radius:17px;background:linear-gradient(#e7f8ff,#fff6dd);overflow:hidden}.collectItem{position:absolute;border:0;background:transparent;padding:0;cursor:pointer;animation:bob 3s ease-in-out infinite alternate}.collectItem img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 2px rgba(0,0,0,.14))}.collectItem.gone{opacity:0;pointer-events:none;transition:.2s}@keyframes bob{from{transform:translateY(-4px)}to{transform:translateY(4px)}}
+:root{--ink:#171717;--pink:#ff5b9f;--orange:#ff8b27;--yellow:#ffd83a;--green:#72d653;--blue:#43c1eb;--purple:#a152df}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:VAG,Arial,sans-serif;background:#f4f5f7;color:var(--ink);user-select:none}body{zoom:.75}button{font:inherit}#shell{min-height:100vh;border:11px solid transparent;border-image:linear-gradient(90deg,#ff3b7d 0 14%,#ff7d1f 14% 28%,#ffd52b 28% 42%,#4ed163 42% 57%,#27b6e6 57% 71%,#7348e7 71% 86%,#ff3b7d 86%) 1;background:#fff}header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;padding:9px 18px 11px;border-bottom:5px solid #222;background:#fff;font-family:Homebody,VAG,sans-serif;text-transform:uppercase}.brand{font-family:Homebody,VAG,sans-serif;font-size:clamp(31px,4.1vw,61px);line-height:.92;letter-spacing:.2px;white-space:nowrap;background:linear-gradient(90deg,#f52c8b,#ff7a18,#e9bd08,#48bf4d,#149fd8,#7240da,#e43ac4);-webkit-background-clip:text;background-clip:text;color:transparent}.nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.nav button{font-family:Homebody,VAG,sans-serif;text-transform:uppercase;padding:8px 13px;min-height:43px;border:4px solid #222;border-radius:14px;background:#fff;box-shadow:0 3px 0 #222;cursor:pointer}.nav button:active{transform:translateY(2px);box-shadow:0 1px 0 #222}main{padding:14px}.view{display:none}.view.active{display:block}.home-note{text-align:center;font-size:clamp(18px,2vw,25px);margin:1px 0 14px}.game-grid{max-width:1360px;margin:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.game-card{border:5px solid #222;border-radius:20px;overflow:hidden;background:#fff;padding:0;cursor:pointer;box-shadow:0 5px 0 #222;min-height:265px;display:grid;grid-template-rows:auto 1fr auto}.game-card:active{transform:translateY(3px);box-shadow:0 2px 0 #222}.game-card .bar{padding:9px 10px;text-align:left;font-size:clamp(21px,2vw,31px);display:flex;align-items:center;gap:10px;line-height:1}.game-num{width:42px;height:42px;flex:0 0 42px;border:4px solid #222;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px}.game-card .thumb{height:165px;border-top:4px solid #222;border-bottom:4px solid #222;background:#fff;display:grid;place-items:center;overflow:hidden;padding:5px}.game-card .thumb img{width:100%;height:100%;object-fit:contain}.game-card .desc{text-align:center;padding:8px 10px;font-size:17px;line-height:1.1;background:#fff}.c1 .bar{background:var(--pink)}.c2 .bar{background:var(--yellow)}.c3 .bar{background:var(--green)}.c4 .bar{background:var(--blue)}.c5 .bar{background:var(--purple)}.c6 .bar{background:var(--orange)}
+#gameTop{max-width:1420px;margin:0 auto 9px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px}#gameTitle{font-size:clamp(25px,3vw,40px)}.stats{display:flex;gap:8px;justify-content:flex-end}.pill{border:4px solid #222;border-radius:999px;background:#fff;padding:7px 14px;font-size:18px}#direction{max-width:1420px;margin:0 auto 10px;border:4px solid #222;border-radius:17px;background:#fff;min-height:76px;padding:8px 12px;display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;font-size:clamp(20px,2.1vw,30px)}#direction img{width:66px;height:58px;object-fit:contain}#stage{max-width:1420px;height:620px;margin:auto;border:5px solid #222;border-radius:22px;background:#f7fbff;position:relative;overflow:hidden}#toast{position:absolute;z-index:99;left:50%;top:16px;transform:translateX(-50%);border:4px solid #222;border-radius:15px;background:#fff;padding:8px 15px;font-size:22px;opacity:0;pointer-events:none;transition:.15s}#toast.show{opacity:1}.win{position:absolute;inset:0;z-index:90;background:rgba(255,255,255,.94);display:grid;place-items:center;text-align:center}.winbox{border:6px solid #222;border-radius:25px;background:#fff;padding:25px 38px;box-shadow:0 7px 0 #222}.win h2{font-size:clamp(50px,8vw,105px);margin:0;color:#8039d4}.win p{font-size:23px}.win button{border:4px solid #222;border-radius:14px;padding:10px 18px;background:#ffd83a;margin:5px;cursor:pointer}
+.catch-bg{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat}.catch-target{position:absolute;border:0;background:transparent;padding:18px;cursor:pointer;transition:left 1.25s ease-in-out,top 1.25s ease-in-out;animation:gentleHop 1.65s ease-in-out infinite alternate}.catch-target img{display:block;margin:auto;max-width:128px;max-height:112px;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 2px rgba(0,0,0,.15))}@keyframes gentleHop{from{transform:translateY(-7px) rotate(-2deg)}to{transform:translateY(7px) rotate(2deg)}}.reveal{position:absolute;inset:14px;border-radius:16px;background:#1b0d32;overflow:hidden;display:grid;place-items:center}.reveal>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#1b0d32}.tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);gap:3px}.tile{border:0;cursor:pointer;background:linear-gradient(145deg,#8d46e5,#ff5ba7);outline:2px solid rgba(255,255,255,.7)}.tile:nth-child(3n+2){background:linear-gradient(145deg,#27b9ea,#6ddc64)}.tile:nth-child(3n){background:linear-gradient(145deg,#ffd42b,#ff7e1e)}.tile.gone{opacity:0;pointer-events:none;transition:.2s}
+.desktop{position:absolute;inset:15px;border:4px solid #222;border-radius:16px;background-position:center;background-size:cover;background-repeat:no-repeat;overflow:hidden}.taskbar{position:absolute;left:0;right:0;bottom:0;height:48px;background:#273646}.folders{position:absolute;inset:32px 30px 72px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:center}.folder{border:0;background:transparent;cursor:pointer;display:grid;justify-items:center;gap:3px}.folderpic{position:relative;width:180px;height:145px}.folderpic>img:first-child{width:100%;height:100%;object-fit:contain}.folderpic .badge{position:absolute;width:66px;height:58px;object-fit:contain;left:50%;top:50%;transform:translate(-50%,-45%);background:#fff;border:3px solid #222;border-radius:9px;padding:3px}.folderlabel{background:#fff;border:3px solid #222;border-radius:9px;padding:4px 8px}.fakewindow{position:absolute;z-index:60;width:min(760px,82%);left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:5px solid #222;border-radius:17px;box-shadow:0 15px 30px rgba(0,0,0,.25);overflow:hidden}.winbar{height:45px;background:#45bce8;border-bottom:4px solid #222;display:flex;justify-content:space-between;align-items:center;padding:0 12px;font-size:21px}.winbar button{width:38px;height:33px;border:3px solid #222;border-radius:8px;background:#ff6c80;cursor:pointer}.wincontent{text-align:center;padding:16px;font-size:21px}.wincontent img{width:180px;height:150px;object-fit:contain}
+.sceneWrap{position:absolute;inset:14px;border-radius:15px;overflow:hidden;background:#16102d}.sceneWrap>img{width:100%;height:100%;object-fit:contain}.hotspot{position:absolute;border:0;background:transparent;cursor:pointer}.hotspot.good{outline:6px solid #56c94c;border-radius:13px;background:rgba(86,201,76,.12)}.hotspot.bad{outline:6px solid #ff5c76;border-radius:13px;background:rgba(255,92,118,.12)}
+.matchLayout{position:absolute;inset:15px;display:grid;grid-template-columns:.78fr 1.22fr;gap:14px;background-position:center;background-size:cover;border:4px solid #222;border-radius:17px;padding:14px}.matchTarget,.matchChoices{border:4px solid #222;border-radius:17px;background:rgba(255,255,255,.94);padding:13px}.matchTarget{display:grid;place-items:center;text-align:center}.matchTarget .clue{font-size:clamp(23px,2.4vw,34px);line-height:1.15;padding:10px}.matchChoices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.matchChoice{border:4px solid #222;border-radius:15px;background:rgba(255,255,255,.96);cursor:pointer;display:grid;place-items:center;padding:8px;min-height:200px}.matchChoice img{width:165px;height:145px;object-fit:contain}.matchChoice div{font-size:18px}.collect{position:absolute;inset:15px;border:4px solid #222;border-radius:17px;background-position:center;background-size:cover;background-repeat:no-repeat;overflow:hidden}.collectItem{position:absolute;border:0;background:transparent;padding:10px;cursor:pointer;animation:bob 3.4s ease-in-out infinite alternate}.collectItem img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 3px rgba(0,0,0,.28))}.collectItem.gone{opacity:0;pointer-events:none;transition:.2s}@keyframes bob{from{transform:translateY(-4px)}to{transform:translateY(4px)}}
+@media(max-width:1150px),(max-height:720px){body{zoom:.60}}
 @media(max-width:900px){header{grid-template-columns:1fr}.nav{justify-content:center}.brand{justify-content:center}.game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#stage{height:720px}.folders{grid-template-columns:repeat(2,1fr)}.matchLayout{grid-template-columns:1fr}.matchChoices{grid-template-columns:repeat(4,1fr)}}@media(max-width:560px){.game-grid{grid-template-columns:1fr}.arcade{white-space:normal}}
-</style></head><body><div id="shell"><header><div class="brand"><div class="ms">Ms. Kaple's</div><div class="arcade">DOUBLE-CLICK STEM ARCADE</div></div><div class="nav"><button id="homeBtn">GAMES</button><button id="resetBtn">RESET GAME</button><button id="prevBtn">◀ PREV</button><button id="nextBtn">NEXT ▶</button></div></header><main><section id="home" class="view active"><div class="home-note">Pick a game. Your score is saved when you leave and come back.</div><div id="cards" class="game-grid"></div></section><section id="game" class="view"><div id="gameTop"><div id="gameTitle"></div><div class="stats"><div class="pill">Score: <span id="score">0</span></div><div class="pill" id="roundPill">Round: <span id="round">1</span></div><div class="pill">Best: <span id="best">0</span></div></div></div><div id="direction"></div><div id="stage"><div id="toast"></div></div></section></main></div>
+</style></head><body><div id="shell"><header><div class="brand">MS. KAPLE'S DOUBLE-CLICK STEM ARCADE</div><div class="nav"><button id="homeBtn">GAMES</button><button id="resetBtn">RESET GAME</button><button id="prevBtn">◀ PREV</button><button id="nextBtn">NEXT ▶</button></div></header><main><section id="home" class="view active"><div class="home-note">CHOOSE A GAME</div><div id="cards" class="game-grid"></div></section><section id="game" class="view"><div id="gameTop"><div id="gameTitle"></div><div class="stats"><div class="pill">SCORE: <span id="score">0</span></div></div></div><div id="direction"></div><div id="stage"><div id="toast"></div></div></section></main></div>
 <script>
-const HOTSPOTS={"hidden_room1.jpg": {"whiteboard": [37.724, 7.258, 19.724, 29.839], "clock": [82.069, 5.645, 8.966, 20.968], "bookcase": [76.552, 40.323, 17.931, 48.387], "desk": [23.862, 62.903, 24.0, 33.871], "chair": [53.931, 63.71, 8.621, 33.871]}, "hidden_room2.jpg": {"whiteboard": [55.931, 7.258, 19.172, 29.032], "clock": [11.724, 4.839, 8.966, 20.968], "bookcase": [4.828, 40.323, 17.241, 46.613], "desk": [57.655, 62.903, 24.0, 33.871], "chair": [40.138, 63.71, 8.621, 33.871]}};
-const ASSETS={pencil:{word:'PENCIL',img:'pencil.png'},scissors:{word:'SCISSORS',img:'scissors.png'},glue:{word:'GLUE',img:'glue.png'},marker:{word:'MARKER',img:'marker.png'},notebook:{word:'NOTEBOOK',img:'notebook.png'},ruler:{word:'RULER',img:'ruler.png'},tape:{word:'TAPE',img:'tape.png'},paper:{word:'PAPER',img:'paper.png'},paint:{word:'PAINT',img:'paint.png'},brush:{word:'PAINTBRUSH',img:'brush.png'},clock:{word:'CLOCK',img:'clock.png'},desk:{word:'DESK',img:'desk.png'},chair:{word:'CHAIR',img:'chair.png'},bookcase:{word:'BOOKCASE',img:'bookcase.png'},whiteboard:{word:'WHITEBOARD',img:'whiteboard.png'},paperclip:{word:'PAPER CLIP',img:'paperclip.png'},stapler:{word:'STAPLER',img:'stapler.png'},eraser:{word:'ERASER',img:'eraser.png'},pen:{word:'PEN',img:'pen.png'}};
-const G=[{title:'Catch the STEM Stuff!',desc:'Catch a new flying item as your score grows',c:'c1',type:'catch',thumb:'pencil.png'},{title:'Reveal the Picture!',desc:'Uncover the whole colorful picture',c:'c2',type:'reveal',thumb:'reveal2.jpg'},{title:'Open the Files!',desc:'Open the one correct STEM file',c:'c3',type:'files',thumb:'folder_green.png'},{title:'Hidden Picture Hunt!',desc:'Find the item inside one cartoon scene',c:'c4',type:'hunt',thumb:'hidden_room1.jpg'},{title:'Find the STEM Pair!',desc:'Double-click the item that belongs with it',c:'c5',type:'match',thumb:'paint.png'},{title:'Collect Them All!',desc:'Collect every matching STEM item',c:'c6',type:'collect',thumb:'ruler.png'}];
-const cards=document.getElementById('cards'),home=document.getElementById('home'),game=document.getElementById('game'),stage=document.getElementById('stage'),direction=document.getElementById('direction'),gameTitle=document.getElementById('gameTitle'),scoreEl=document.getElementById('score'),roundEl=document.getElementById('round'),bestEl=document.getElementById('best'),roundPill=document.getElementById('roundPill');let current=0,score=0,round=1,timer=null;
-function key(t,s){return `msKapleDC_${t}_${s}`}function loadNum(k,d=0){const n=Number(localStorage.getItem(k));return Number.isFinite(n)?n:d}function save(){localStorage.setItem(key(G[current].type,'score'),score);localStorage.setItem(key(G[current].type,'round'),round);const b=Math.max(loadNum(key(G[current].type,'best')),score);localStorage.setItem(key(G[current].type,'best'),b);bestEl.textContent=b}function savedScore(type){return loadNum(key(type,'score'))}function updateCards(){[...cards.children].forEach((b,i)=>{const e=b.querySelector('.saved');if(e)e.textContent=`Saved score: ${savedScore(G[i].type)}`})}function setScore(v){score=v;scoreEl.textContent=v;save();updateCards()}function setRound(v){round=v;roundEl.textContent=v;save()}function clearTimer(){if(timer){clearTimeout(timer);timer=null}}function resetStage(){clearTimer();stage.innerHTML='<div id="toast"></div>'}function dirPic(k,text){const a=ASSETS[k];direction.innerHTML=`<img src="${a.img}" alt="${a.word}"><span>${text.replace('{{WORD}}',a.word)}</span>`}function dirText(t){direction.innerHTML=`<span>${t}</span>`}function toast(t){const e=document.getElementById('toast');if(!e)return;e.textContent=t;e.classList.add('show');clearTimeout(e._x);e._x=setTimeout(()=>e.classList.remove('show'),650)}function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-G.forEach((g,i)=>{const b=document.createElement('button');b.className=`game-card ${g.c}`;b.innerHTML=`<div class="bar">${g.title}</div><div class="thumb"><img src="${g.thumb}" alt=""></div><div class="desc">${g.desc}<div class="saved"></div></div>`;b.onclick=()=>startGame(i);cards.appendChild(b)});updateCards();
-function showHome(){clearTimer();game.classList.remove('active');home.classList.add('active');updateCards()}function startGame(i){current=(i+G.length)%G.length;home.classList.remove('active');game.classList.add('active');gameTitle.textContent=G[current].title;score=savedScore(G[current].type);round=Math.max(1,loadNum(key(G[current].type,'round'),1));scoreEl.textContent=score;roundEl.textContent=round;bestEl.textContent=loadNum(key(G[current].type,'best'));roundPill.style.display=G[current].type==='catch'?'none':'block';setup()}function resetCurrent(){localStorage.setItem(key(G[current].type,'score'),0);localStorage.setItem(key(G[current].type,'round'),1);score=0;round=1;scoreEl.textContent=0;roundEl.textContent=1;setup();updateCards()}document.getElementById('homeBtn').onclick=showHome;document.getElementById('resetBtn').onclick=resetCurrent;document.getElementById('prevBtn').onclick=()=>startGame(current-1);document.getElementById('nextBtn').onclick=()=>startGame(current+1);
+const HOTSPOTS={"seek_scene.jpg": {"pencil": [47.524, 69.588, 1.14, 8.471], "scissors": [15.239, 59.024, 2.46, 9.6], "ruler": [50.516, 25.7, 0.78, 5.365], "glue": [83.171, 59.041, 2.22, 10.447], "notebook": [90.505, 83.294, 3.24, 9.882], "stapler": [5.407, 35.406, 4.56, 5.365]}};
+const ASSETS={
+pencil:{word:'PENCIL',img:'pencil.png'},scissors:{word:'SCISSORS',img:'scissors.png'},glue:{word:'GLUE',img:'glue.png'},marker:{word:'MARKER',img:'marker.png'},notebook:{word:'NOTEBOOK',img:'notebook.png'},ruler:{word:'RULER',img:'ruler.png'},tape:{word:'TAPE',img:'tape.png'},paper:{word:'PAPER',img:'paper.png'},paint:{word:'PAINT',img:'paint.png'},brush:{word:'PAINTBRUSH',img:'brush.png'},clock:{word:'CLOCK',img:'clock.png'},desk:{word:'DESK',img:'desk.png'},chair:{word:'CHAIR',img:'chair.png'},bookcase:{word:'BOOKCASE',img:'bookcase.png'},whiteboard:{word:'WHITEBOARD',img:'whiteboard.png'},group_table:{word:'TABLE',img:'group_table.png'},paperclip:{word:'PAPER CLIP',img:'paperclip.png'},stapler:{word:'STAPLER',img:'stapler.png'},eraser:{word:'ERASER',img:'eraser.png'},pen:{word:'PEN',img:'pen.png'},
+controller:{word:'GAME CONTROLLER',img:'controller.png'},robot:{word:'ROBOT',img:'robot.png'},sneaker:{word:'SNEAKER',img:'sneaker.png'},lightning:{word:'LIGHTNING BOLT',img:'lightning.png'},icecream:{word:'ICE CREAM',img:'icecream.png'},skateboard:{word:'SKATEBOARD',img:'skateboard.png'},camera:{word:'CAMERA',img:'camera.png'},sunglasses:{word:'SUNGLASSES',img:'sunglasses.png'},drone:{word:'DRONE',img:'drone.png'},joystick:{word:'JOYSTICK',img:'joystick.png'},rocket:{word:'ROCKET',img:'rocket.png'},smartwatch:{word:'SMARTWATCH',img:'smartwatch.png'},microphone:{word:'MICROPHONE',img:'microphone.png'},rollerskate:{word:'ROLLER SKATE',img:'rollerskate.png'},popsicle:{word:'POPSICLE',img:'popsicle.png'},headphones:{word:'HEADPHONES',img:'headphones.png'},ufo:{word:'UFO',img:'ufo.png'},trophy:{word:'TROPHY',img:'trophy.png'},magnifier:{word:'MAGNIFYING GLASS',img:'magnifier.png'},pizza:{word:'PIZZA',img:'pizza.png'}
+};
+const SPACE=['space1.jpg','space2.jpg','space3.jpg','space4.jpg','space5.jpg','space6.jpg','space7.jpg','space8.jpg','space9.jpg','space10.jpg'];
+const G=[
+{title:'CATCH THE TECH',desc:'DOUBLE-CLICK THE MOVING TECH ITEM',c:'c1',type:'catch',thumb:'home_catch_space.jpg'},
+{title:'REVEAL THE PICTURE',desc:'DOUBLE-CLICK TILES TO UNCOVER IT',c:'c2',type:'reveal',thumb:'home_reveal.jpg'},
+{title:'OPEN THE FILE',desc:'DOUBLE-CLICK THE MATCHING FILE',c:'c3',type:'files',thumb:'home_files_space.jpg'},
+{title:'FIND IT IN THE SCENE',desc:'SEARCH THE PICTURE AND DOUBLE-CLICK IT',c:'c4',type:'hunt',thumb:'home_hunt.jpg'},
+{title:'PICK THE TECH',desc:'READ THE CLUE AND DOUBLE-CLICK THE ANSWER',c:'c5',type:'match',thumb:'home_techpick_space.jpg'},
+{title:'COLLECT THEM ALL',desc:'DOUBLE-CLICK EVERY MATCHING ITEM',c:'c6',type:'collect',thumb:'home_collect_space.jpg'}];
+const cards=document.getElementById('cards'),home=document.getElementById('home'),game=document.getElementById('game'),stage=document.getElementById('stage'),direction=document.getElementById('direction'),gameTitle=document.getElementById('gameTitle'),scoreEl=document.getElementById('score');let current=0,score=0,round=1,timer=null;
+function key(t,s){return `msKapleDC_${t}_${s}`}
+function loadNum(k,d=0){const n=Number(localStorage.getItem(k));return Number.isFinite(n)?n:d}
+function save(){localStorage.setItem(key(G[current].type,'score'),score);localStorage.setItem(key(G[current].type,'round'),round)}
+function savedScore(type){return loadNum(key(type,'score'))}
+function setScore(v){score=v;scoreEl.textContent=v;save()}
+function setRound(v){round=v;save()}
+function clearTimer(){if(timer){clearTimeout(timer);timer=null}}
+function resetStage(){clearTimer();stage.innerHTML='<div id="toast"></div>'}
+function dirPic(k,text){const a=ASSETS[k];direction.innerHTML=`<img src="${a.img}" alt="${a.word}"><span>${text.replace('{{WORD}}',a.word)}</span>`}
+function dirText(t){direction.innerHTML=`<span>${t}</span>`}
+function toast(t){const e=document.getElementById('toast');if(!e)return;e.textContent=t;e.classList.add('show');clearTimeout(e._x);e._x=setTimeout(()=>e.classList.remove('show'),650)}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+G.forEach((g,i)=>{const b=document.createElement('button');b.className=`game-card ${g.c}`;b.innerHTML=`<div class="bar"><span class="game-num">${i+1}</span><span>${g.title}</span></div><div class="thumb"><img src="${g.thumb}" alt=""></div><div class="desc">${g.desc}</div>`;b.onclick=()=>startGame(i);cards.appendChild(b)});
+function showHome(){clearTimer();game.classList.remove('active');home.classList.add('active')}
+function startGame(i){current=(i+G.length)%G.length;home.classList.remove('active');game.classList.add('active');gameTitle.textContent=G[current].title;score=savedScore(G[current].type);round=Math.max(1,loadNum(key(G[current].type,'round'),1));scoreEl.textContent=score;setup()}
+function resetCurrent(){localStorage.setItem(key(G[current].type,'score'),0);localStorage.setItem(key(G[current].type,'round'),1);score=0;round=1;scoreEl.textContent=0;setup()}
+document.getElementById('homeBtn').onclick=showHome;
+document.getElementById('resetBtn').onclick=resetCurrent;
+document.getElementById('prevBtn').onclick=()=>startGame(current-1);
+document.getElementById('nextBtn').onclick=()=>startGame(current+1);
 function setup(){resetStage();const t=G[current].type;if(t==='catch')catchGame();if(t==='reveal')revealGame();if(t==='files')filesGame();if(t==='hunt')huntGame();if(t==='match')matchGame();if(t==='collect')collectGame()}
-function win(){save();localStorage.setItem(key(G[current].type,'round'),1);const w=document.createElement('div');w.className='win';w.innerHTML=`<div class="winbox"><h2>YOU WIN!</h2><p>Score: ${score} &nbsp; • &nbsp; Best: ${loadNum(key(G[current].type,'best'))}</p><button class="again">KEEP PLAYING</button><button class="homewin">GAMES</button></div>`;w.querySelector('.again').onclick=()=>{setRound(1);setup()};w.querySelector('.homewin').onclick=showHome;stage.appendChild(w)}
+function win(){save();localStorage.setItem(key(G[current].type,'round'),1);const w=document.createElement('div');w.className='win';w.innerHTML=`<div class="winbox"><h2>YOU WIN!</h2><p>SCORE: ${score}</p><button class="again">KEEP PLAYING</button><button class="homewin">GAMES</button></div>`;w.querySelector('.again').onclick=()=>{setRound(1);setup()};w.querySelector('.homewin').onclick=showHome;stage.appendChild(w)}
 
-// 1. Catch: the target changes every five points; later levels add copies instead of becoming too fast.
-const CATCH=[{k:'pencil',copies:1},{k:'scissors',copies:1},{k:'ruler',copies:2},{k:'marker',copies:2},{k:'notebook',copies:3},{k:'glue',copies:3}];function catchGame(){const lev=Math.min(CATCH.length-1,Math.floor(score/5)),cfg=CATCH[lev];dirPic(cfg.k,'Catch the {{WORD}}! DOUBLE-CLICK it.');const bg=document.createElement('div');bg.className='catch-bg';stage.appendChild(bg);const movers=[];for(let i=0;i<cfg.copies;i++){const b=document.createElement('button');b.className='catch-target';b.style.width='125px';b.style.height='110px';b.innerHTML=`<img src="${ASSETS[cfg.k].img}" alt="${ASSETS[cfg.k].word}">`;b.addEventListener('click',e=>e.preventDefault());b.addEventListener('dblclick',e=>{e.preventDefault();setScore(score+1);toast('Great double-click!');const newLev=Math.min(CATCH.length-1,Math.floor(score/5));if(newLev!==lev){setTimeout(setup,250)}else{clearTimer();moveOne(b,true);timer=setTimeout(drift,3200)}});stage.appendChild(b);movers.push(b)}function moveOne(b,quick=false){const W=stage.clientWidth,H=stage.clientHeight,w=125,h=110,pad=24;b.style.transitionDuration=quick?'.32s':'1.10s';b.style.left=(pad+Math.random()*Math.max(10,W-w-pad*2))+'px';b.style.top=(pad+Math.random()*Math.max(10,H-h-pad*2))+'px'}movers.forEach(b=>moveOne(b,true));function drift(){movers.forEach(b=>moveOne(b,false));timer=setTimeout(drift,3200)}timer=setTimeout(drift,3200)}
+// 1. Catch the Tech: new rainbow tech PNGs on simple space backgrounds.
+const CATCH=[
+{k:'drone',copies:1},{k:'controller',copies:1},{k:'robot',copies:1},
+{k:'camera',copies:2},{k:'rocket',copies:2},{k:'smartwatch',copies:2},
+{k:'headphones',copies:2},{k:'ufo',copies:3},{k:'joystick',copies:3}
+];
+function catchGame(){
+  const lev=Math.min(CATCH.length-1,Math.floor(score/5)),cfg=CATCH[lev];
+  dirPic(cfg.k,'CATCH THE {{WORD}}! DOUBLE-CLICK IT.');
+  const bg=document.createElement('div');bg.className='catch-bg';
+  bg.style.backgroundImage=`url("${SPACE[lev%SPACE.length]}")`;
+  stage.appendChild(bg);
+  const movers=[];
+  let pausedByHover=false;
+
+  for(let i=0;i<cfg.copies;i++){
+    const b=document.createElement('button');b.className='catch-target';
+    b.style.width='190px';b.style.height='170px';
+    b.style.animationDelay=(i*.24)+'s';
+    b.innerHTML=`<img src="${ASSETS[cfg.k].img}" alt="${ASSETS[cfg.k].word}">`;
+    b.addEventListener('click',e=>e.preventDefault());
+    b.addEventListener('mouseenter',()=>{pausedByHover=true;clearTimer()});
+    b.addEventListener('mouseleave',()=>{pausedByHover=false;scheduleDrift()});
+    b.addEventListener('dblclick',e=>{
+      e.preventDefault();
+      setScore(score+1);toast('GREAT DOUBLE-CLICK!');
+      const newLev=Math.min(CATCH.length-1,Math.floor(score/5));
+      if(newLev!==lev){setTimeout(setup,300);return}
+      moveOne(b,true);scheduleDrift()
+    });
+    stage.appendChild(b);movers.push(b)
+  }
+
+  function moveOne(b,quick=false){
+    const W=stage.clientWidth,H=stage.clientHeight,w=190,h=170,pad=68;
+    b.style.transitionDuration=quick?'.55s':'1.25s';
+    b.style.left=(pad+Math.random()*Math.max(10,W-w-pad*2))+'px';
+    b.style.top=(pad+Math.random()*Math.max(10,H-h-pad*2))+'px'
+  }
+  movers.forEach(b=>moveOne(b,true));
+
+  function scheduleDrift(){
+    clearTimer();
+    if(pausedByHover)return;
+    timer=setTimeout(()=>{
+      if(pausedByHover)return;
+      movers.forEach(b=>moveOne(b,false));
+      scheduleDrift()
+    },5200);
+  }
+  scheduleDrift()
+}
 
 // 2. Reveal: image is always CONTAIN, never cover; selected art has no edge-cut animals.
 const REVEALS=['reveal1.jpg','reveal2.jpg','reveal3.jpg','reveal4.jpg'];function revealGame(){round=((round-1)%4)+1;save();dirText('DOUBLE-CLICK the tiles. The WHOLE picture stays on the screen!');const w=document.createElement('div');w.className='reveal';w.innerHTML=`<img src="${REVEALS[round-1]}" alt="Colorful technology picture"><div class="tiles"></div>`;const tiles=w.querySelector('.tiles');let left=15;for(let i=0;i<15;i++){const b=document.createElement('button');b.className='tile';b.addEventListener('click',e=>e.preventDefault());b.addEventListener('dblclick',e=>{e.preventDefault();if(b.classList.contains('gone'))return;b.classList.add('gone');setScore(score+1);left--;if(left===0){if(round>=4)setTimeout(win,650);else{setRound(round+1);setTimeout(setup,650)}}});tiles.appendChild(b)}stage.appendChild(w)}
 
-// 3. Files: every folder has a UNIQUE picture; target clipart appears exactly once per screen.
-const FILE_ROUNDS=[{target:'pencil',title:'ENGINEERING PLAN',fact:'Engineers sketch and label ideas before they build.'},{target:'scissors',title:'MAKER TOOL',fact:'Makers use tools safely to shape materials.'},{target:'notebook',title:'DATA NOTES',fact:'Scientists record observations and data.'},{target:'glue',title:'BUILD TOOL',fact:'Engineers connect materials when they build prototypes.'},{target:'ruler',title:'MEASURE',fact:'Engineers measure before they cut or build.'}];const FILE_KEYS=['pencil','scissors','notebook','glue','ruler','marker','tape','paper'];const FOLDERS=['folder_green.png','folder_yellow.png','folder_blue.png','folder_purple.png'];function filesGame(){round=((round-1)%FILE_ROUNDS.length)+1;save();const info=FILE_ROUNDS[round-1];dirPic(info.target,'DOUBLE-CLICK the {{WORD}} file.');const desk=document.createElement('div');desk.className='desktop';desk.innerHTML='<div class="taskbar"></div><div class="folders"></div>';const grid=desk.querySelector('.folders');let others=shuffle(FILE_KEYS.filter(k=>k!==info.target)).slice(0,3);let choices=shuffle([info.target,...others]);choices.forEach((k,i)=>{const b=document.createElement('button');b.className='folder';b.innerHTML=`<div class="folderpic"><img src="${FOLDERS[i%FOLDERS.length]}" alt="folder"><img class="badge" src="${ASSETS[k].img}" alt="${ASSETS[k].word}"></div><div class="folderlabel">${ASSETS[k].word}</div>`;b.addEventListener('click',e=>e.preventDefault());b.addEventListener('dblclick',e=>{e.preventDefault();if(k!==info.target){toast('That is a different file.');return}openWindow(info)});grid.appendChild(b)});stage.appendChild(desk)}function openWindow(info){const w=document.createElement('div');w.className='fakewindow';w.innerHTML=`<div class="winbar"><span>${info.title}</span><button aria-label="Close">×</button></div><div class="wincontent"><img src="${ASSETS[info.target].img}" alt="${ASSETS[info.target].word}"><div>${info.fact}</div><p style="font-size:16px">Click the X to close the file.</p></div>`;w.querySelector('button').onclick=()=>{w.remove();setScore(score+1);if(round>=FILE_ROUNDS.length)win();else{setRound(round+1);setTimeout(setup,200)}};stage.appendChild(w)}
+// 3. Open the File: each visible folder has one unique tech picture.
+const FILE_ROUNDS=[
+{target:'camera',title:'CAMERA FILE',fact:'A digital camera uses a lens and sensor to capture an image.'},
+{target:'drone',title:'DRONE FILE',fact:'A drone uses motors, sensors, and controls to fly.'},
+{target:'controller',title:'CONTROLLER FILE',fact:'A game controller sends button and joystick input to a computer.'},
+{target:'smartwatch',title:'SMARTWATCH FILE',fact:'A smartwatch is a tiny wearable computer with sensors.'},
+{target:'microphone',title:'MICROPHONE FILE',fact:'A microphone changes sound waves into an electronic signal.'},
+{target:'magnifier',title:'SCIENCE TOOL FILE',fact:'A magnifying glass helps scientists see small details more clearly.'},
+{target:'rocket',title:'ROCKET FILE',fact:'Engineers design rockets to travel through the atmosphere and into space.'},
+{target:'robot',title:'ROBOT FILE',fact:'A robot can be programmed to sense, move, and complete tasks.'}
+];
+const FILE_KEYS=['camera','drone','controller','smartwatch','microphone','magnifier','rocket','robot','headphones','joystick','ufo'];
+const FOLDERS=['folder_green.png','folder_yellow.png','folder_blue.png','folder_purple.png'];
+function filesGame(){
+  round=((round-1)%FILE_ROUNDS.length)+1;save();
+  const info=FILE_ROUNDS[round-1];
+  dirPic(info.target,'DOUBLE-CLICK the {{WORD}} file.');
+  const desk=document.createElement('div');desk.className='desktop';
+  desk.style.backgroundImage=`url("${SPACE[(round+2)%SPACE.length]}")`;
+  desk.innerHTML='<div class="taskbar"></div><div class="folders"></div>';
+  const grid=desk.querySelector('.folders');
+  let others=shuffle(FILE_KEYS.filter(k=>k!==info.target)).slice(0,3);
+  let choices=shuffle([info.target,...others]);
+  choices.forEach((k,i)=>{
+    const b=document.createElement('button');b.className='folder';
+    b.innerHTML=`<div class="folderpic"><img src="${FOLDERS[i%FOLDERS.length]}" alt="folder"><img class="badge" src="${ASSETS[k].img}" alt="${ASSETS[k].word}"></div><div class="folderlabel">${ASSETS[k].word}</div>`;
+    b.addEventListener('click',e=>e.preventDefault());
+    b.addEventListener('dblclick',e=>{
+      e.preventDefault();
+      if(k!==info.target){toast('THAT IS A DIFFERENT FILE.');return}
+      openWindow(info)
+    });
+    grid.appendChild(b)
+  });
+  stage.appendChild(desk)
+}
+function openWindow(info){
+  const w=document.createElement('div');w.className='fakewindow';
+  w.innerHTML=`<div class="winbar"><span>${info.title}</span><button aria-label="Close">×</button></div><div class="wincontent"><img src="${ASSETS[info.target].img}" alt="${ASSETS[info.target].word}"><div>${info.fact}</div><p style="font-size:16px">CLICK THE X TO CLOSE THE FILE.</p></div>`;
+  w.querySelector('button').onclick=()=>{
+    w.remove();setScore(score+1);
+    if(round>=FILE_ROUNDS.length)win();
+    else{setRound(round+1);setTimeout(setup,200)}
+  };
+  stage.appendChild(w)
+}
 
-// 4. Hidden-picture hotspot game. Hotspots live INSIDE the exact image wrapper, fixing the clock.
-const HUNT=[{scene:'hidden_room1.jpg',k:'clock'},{scene:'hidden_room1.jpg',k:'bookcase'},{scene:'hidden_room1.jpg',k:'whiteboard'},{scene:'hidden_room2.jpg',k:'desk'},{scene:'hidden_room2.jpg',k:'chair'},{scene:'hidden_room2.jpg',k:'clock'}];function huntGame(){round=((round-1)%HUNT.length)+1;save();const info=HUNT[round-1];dirPic(info.k,'Find and DOUBLE-CLICK the {{WORD}} in the picture.');const wrap=document.createElement('div');wrap.className='sceneWrap';wrap.innerHTML=`<img src="${info.scene}" alt="Cartoon classroom">`;const map=HOTSPOTS[info.scene];Object.entries(map).forEach(([k,r])=>{const b=document.createElement('button');b.className='hotspot';b.style.left=r[0]+'%';b.style.top=r[1]+'%';b.style.width=r[2]+'%';b.style.height=r[3]+'%';b.addEventListener('click',e=>e.preventDefault());b.addEventListener('dblclick',e=>{e.preventDefault();if(k!==info.k){b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),330);return}b.classList.add('good');setScore(score+1);toast('Found it!');if(round>=HUNT.length)setTimeout(win,500);else{setRound(round+1);setTimeout(setup,500)}});wrap.appendChild(b)});stage.appendChild(wrap)}
+// 4. Hidden Picture Hunt using Ms. Kaple's five supplied rainbow seek-and-find scenes.
+const FIND_ROUNDS=[{"scene": "find_scene1.jpg", "label": "UNICORN", "cue": "find1_cue1.jpg", "rect": [35.969, 15.296, 9.365, 18.944]}, {"scene": "find_scene1.jpg", "label": "LAVA LAMP", "cue": "find1_cue2.jpg", "rect": [43.052, 13.333, 6.135, 20.093]}, {"scene": "find_scene1.jpg", "label": "HEADPHONES", "cue": "find1_cue3.jpg", "rect": [40.792, 60.611, 10.656, 19.519]}, {"scene": "find_scene1.jpg", "label": "TABLET", "cue": "find1_cue4.jpg", "rect": [33.677, 73.648, 22.281, 23.537]}, {"scene": "find_scene1.jpg", "label": "MOUSE", "cue": "find1_cue5.jpg", "rect": [23.844, 30.241, 5.49, 8.037]}, {"scene": "find_scene2.jpg", "label": "DRONE", "cue": "find2_cue1.jpg", "rect": [55.958, 0.0, 10.01, 11.481]}, {"scene": "find_scene2.jpg", "label": "CAMERA", "cue": "find2_cue2.jpg", "rect": [68.906, 16.259, 8.073, 13.778]}, {"scene": "find_scene2.jpg", "label": "SKATEBOARD", "cue": "find2_cue3.jpg", "rect": [26.0, 46.426, 7.427, 17.796]}, {"scene": "find_scene2.jpg", "label": "SUNGLASSES", "cue": "find2_cue4.jpg", "rect": [68.062, 77.13, 8.719, 11.481]}, {"scene": "find_scene2.jpg", "label": "JOYSTICK", "cue": "find2_cue5.jpg", "rect": [23.219, 37.833, 5.49, 10.907]}, {"scene": "find_scene3.jpg", "label": "ROLLER SKATE", "cue": "find3_cue1.jpg", "rect": [25.938, 1.259, 8.073, 10.907]}, {"scene": "find_scene3.jpg", "label": "ROCKET", "cue": "find3_cue2.jpg", "rect": [27.167, 30.778, 6.135, 12.056]}, {"scene": "find_scene3.jpg", "label": "MICROPHONE", "cue": "find3_cue3.jpg", "rect": [44.625, 79.741, 8.719, 13.204]}, {"scene": "find_scene3.jpg", "label": "POPSICLE", "cue": "find3_cue4.jpg", "rect": [73.0, 61.333, 6.135, 12.056]}, {"scene": "find_scene3.jpg", "label": "CAMERA", "cue": "find3_cue5.jpg", "rect": [35.188, 81.37, 9.365, 15.5]}, {"scene": "find_scene4.jpg", "label": "LAPTOP", "cue": "find4_cue1.jpg", "rect": [19.875, 17.37, 14.208, 16.648]}, {"scene": "find_scene4.jpg", "label": "ROBOT", "cue": "find4_cue2.jpg", "rect": [31.146, 21.13, 8.073, 16.074]}, {"scene": "find_scene4.jpg", "label": "LANTERN", "cue": "find4_cue3.jpg", "rect": [48.646, 31.185, 4.844, 12.63]}, {"scene": "find_scene4.jpg", "label": "BUTTERFLY", "cue": "find4_cue4.jpg", "rect": [63.5, 43.278, 7.427, 12.056]}, {"scene": "find_scene5.jpg", "label": "SPACESHIP", "cue": "find5_cue1.jpg", "rect": [22.24, 4.685, 19.375, 28.13]}, {"scene": "find_scene5.jpg", "label": "FERRIS WHEEL", "cue": "find5_cue2.jpg", "rect": [62.531, 0.0, 17.438, 26.981]}, {"scene": "find_scene5.jpg", "label": "TRAIN", "cue": "find5_cue3.jpg", "rect": [59.583, 17.667, 20.99, 32.722]}, {"scene": "find_scene5.jpg", "label": "CAR", "cue": "find5_cue4.jpg", "rect": [41.365, 29.148, 7.427, 9.759]}, {"scene": "find_scene5.jpg", "label": "DJ CAT", "cue": "find5_cue5.jpg", "rect": [19.812, 70.704, 14.854, 25.259]}];
+function huntGame(){
+  round=((round-1)%FIND_ROUNDS.length)+1;save();
+  const info=FIND_ROUNDS[round-1];
+  direction.innerHTML=`<img src="${info.cue}" alt="${info.label}"><span>FIND AND DOUBLE-CLICK THE ${info.label}.</span>`;
+  const wrap=document.createElement('div');wrap.className='sceneWrap';
+  wrap.innerHTML=`<img src="${info.scene}" alt="Rainbow hidden picture scene">`;
+  wrap.addEventListener('dblclick',()=>toast('KEEP LOOKING!'));
 
-// 5. New game: functional STEM pairs, replacing the confusing design-station game.
-const PAIRS=[{a:'paint',b:'brush'},{a:'pencil',b:'notebook'},{a:'marker',b:'whiteboard'},{a:'tape',b:'paper'},{a:'scissors',b:'paper'},{a:'ruler',b:'pencil'}];const MATCH_POOL=['brush','notebook','whiteboard','paper','pencil','scissors','marker','glue','ruler','eraser'];function matchGame(){round=((round-1)%PAIRS.length)+1;save();const p=PAIRS[round-1];dirPic(p.a,'What goes with the {{WORD}}? DOUBLE-CLICK its match.');const lay=document.createElement('div');lay.className='matchLayout';const left=document.createElement('div');left.className='matchTarget';left.innerHTML=`<div><img src="${ASSETS[p.a].img}" alt="${ASSETS[p.a].word}"><h3>${ASSETS[p.a].word}</h3></div>`;const choices=document.createElement('div');choices.className='matchChoices';let opts=shuffle(MATCH_POOL.filter(k=>k!==p.b)).slice(0,3);opts=shuffle([p.b,...opts]);opts.forEach(k=>{const b=document.createElement('button');b.className='matchChoice';b.innerHTML=`<img src="${ASSETS[k].img}" alt="${ASSETS[k].word}"><div>${ASSETS[k].word}</div>`;b.addEventListener('click',e=>e.preventDefault());b.addEventListener('dblclick',e=>{e.preventDefault();if(k!==p.b){toast('Try another match.');return}setScore(score+1);toast('That pair works!');if(round>=PAIRS.length)setTimeout(win,450);else{setRound(round+1);setTimeout(setup,450)}});choices.appendChild(b)});lay.append(left,choices);stage.appendChild(lay)}
+  const b=document.createElement('button');b.className='hotspot';
+  b.style.left=info.rect[0]+'%';b.style.top=info.rect[1]+'%';
+  b.style.width=info.rect[2]+'%';b.style.height=info.rect[3]+'%';
+  b.addEventListener('click',e=>e.preventDefault());
+  b.addEventListener('dblclick',e=>{
+    e.preventDefault();e.stopPropagation();
+    b.classList.add('good');setScore(score+1);toast('YOU FOUND IT!');
+    if(round>=FIND_ROUNDS.length)setTimeout(win,500);
+    else{setRound(round+1);setTimeout(setup,500)}
+  });
+  wrap.appendChild(b);
+  stage.appendChild(wrap);
+}
 
-// 6. Collect: target count varies by round instead of always 3.
-const COLLECT=[{k:'pencil',n:2},{k:'scissors',n:4},{k:'ruler',n:3},{k:'marker',n:5},{k:'notebook',n:4}];const DIST=['glue','paperclip','eraser','tape','paper','paint','brush','stapler'];const SPOTS=[[5,9],[24,8],[43,10],[63,8],[81,10],[12,39],[32,40],[52,38],[72,41],[19,69],[42,68],[67,70],[84,67]];function collectGame(){round=((round-1)%COLLECT.length)+1;save();const info=COLLECT[round-1];dirPic(info.k,`Collect ALL ${info.n} {{WORD}} pictures.`);const board=document.createElement('div');board.className='collect';let items=Array(info.n).fill(info.k).concat(shuffle(DIST).slice(0,Math.min(7,SPOTS.length-info.n)));items=shuffle(items);let remaining=info.n;items.forEach((k,i)=>{const b=document.createElement('button');b.className='collectItem';b.style.left=SPOTS[i][0]+'%';b.style.top=SPOTS[i][1]+'%';b.style.width='112px';b.style.height='98px';b.style.animationDelay=(i*.13)+'s';b.innerHTML=`<img src="${ASSETS[k].img}" alt="${ASSETS[k].word}">`;b.addEventListener('click',e=>e.preventDefault());b.addEventListener('dblclick',e=>{e.preventDefault();if(k!==info.k){toast('Only collect the matching item.');return}if(b.classList.contains('gone'))return;b.classList.add('gone');remaining--;setScore(score+1);if(remaining===0){if(round>=COLLECT.length)setTimeout(win,500);else{setRound(round+1);setTimeout(setup,500)}}});board.appendChild(b)});stage.appendChild(board)}
+// 5. Pick the Tech: simple, concrete STEM/technology clues.
+const TECH_PICK=[
+{answer:'camera',clue:'WHICH ONE CAN TAKE A PICTURE?'},
+{answer:'headphones',clue:'WHICH ONE CAN YOU USE TO LISTEN TO SOUND?'},
+{answer:'drone',clue:'WHICH ONE CAN FLY USING MOTORS AND CONTROLS?'},
+{answer:'controller',clue:'WHICH ONE CAN CONTROL A VIDEO GAME?'},
+{answer:'smartwatch',clue:'WHICH ONE IS A COMPUTER YOU CAN WEAR ON YOUR WRIST?'},
+{answer:'microphone',clue:'WHICH ONE CAN RECORD YOUR VOICE?'},
+{answer:'magnifier',clue:'WHICH ONE HELPS YOU LOOK CLOSELY AT SMALL DETAILS?'},
+{answer:'rocket',clue:'WHICH ONE IS ENGINEERED TO TRAVEL INTO SPACE?'},
+{answer:'robot',clue:'WHICH ONE CAN BE PROGRAMMED TO COMPLETE TASKS?'}
+];
+const TECH_POOL=['camera','headphones','drone','controller','smartwatch','microphone','magnifier','rocket','robot','joystick','ufo','sunglasses'];
+function matchGame(){
+  round=((round-1)%TECH_PICK.length)+1;save();
+  const info=TECH_PICK[round-1];
+  dirText('READ THE CLUE. DOUBLE-CLICK THE BEST ANSWER.');
+  const lay=document.createElement('div');lay.className='matchLayout';
+  lay.style.backgroundImage=`url("${SPACE[(round+5)%SPACE.length]}")`;
+  const left=document.createElement('div');left.className='matchTarget';
+  left.innerHTML=`<div class="clue">${info.clue}</div>`;
+  const choices=document.createElement('div');choices.className='matchChoices';
+  let opts=shuffle(TECH_POOL.filter(k=>k!==info.answer)).slice(0,3);
+  opts=shuffle([info.answer,...opts]);
+  opts.forEach(k=>{
+    const b=document.createElement('button');b.className='matchChoice';
+    b.innerHTML=`<img src="${ASSETS[k].img}" alt="${ASSETS[k].word}"><div>${ASSETS[k].word}</div>`;
+    b.addEventListener('click',e=>e.preventDefault());
+    b.addEventListener('dblclick',e=>{
+      e.preventDefault();
+      if(k!==info.answer){toast('TRY ANOTHER ONE.');return}
+      setScore(score+1);toast('YOU GOT IT!');
+      if(round>=TECH_PICK.length)setTimeout(win,450);
+      else{setRound(round+1);setTimeout(setup,450)}
+    });
+    choices.appendChild(b)
+  });
+  lay.append(left,choices);stage.appendChild(lay)
+}
+
+// 6. Collect Them All: changing amounts and the new rainbow PNG set.
+const COLLECT=[
+{k:'drone',n:2},{k:'controller',n:4},{k:'camera',n:5},
+{k:'robot',n:3},{k:'rocket',n:6},{k:'headphones',n:4},
+{k:'microphone',n:3}
+];
+const COLLECT_POOL=['drone','controller','camera','robot','rocket','headphones','microphone','smartwatch','joystick','ufo','sneaker','popsicle','pizza','icecream','skateboard','sunglasses','lightning','trophy','magnifier'];
+const SPOTS=[[5,8],[23,8],[41,9],[60,8],[79,9],[11,37],[30,39],[49,36],[69,39],[18,67],[39,68],[61,67],[81,66]];
+function collectGame(){
+  round=((round-1)%COLLECT.length)+1;save();
+  const info=COLLECT[round-1];
+  dirPic(info.k,`COLLECT ALL ${info.n} {{WORD}} PICTURES.`);
+  const board=document.createElement('div');board.className='collect';
+  board.style.backgroundImage=`url("${SPACE[(round+7)%SPACE.length]}")`;
+  let distractors=shuffle(COLLECT_POOL.filter(k=>k!==info.k)).slice(0,Math.min(7,SPOTS.length-info.n));
+  let items=shuffle(Array(info.n).fill(info.k).concat(distractors));
+  let remaining=info.n;
+  items.forEach((k,i)=>{
+    const b=document.createElement('button');b.className='collectItem';
+    b.style.left=SPOTS[i][0]+'%';b.style.top=SPOTS[i][1]+'%';
+    b.style.width='130px';b.style.height='116px';b.style.animationDelay=(i*.13)+'s';
+    b.innerHTML=`<img src="${ASSETS[k].img}" alt="${ASSETS[k].word}">`;
+    b.addEventListener('click',e=>e.preventDefault());
+    b.addEventListener('dblclick',e=>{
+      e.preventDefault();
+      if(k!==info.k){toast('ONLY COLLECT THE MATCHING ITEM.');return}
+      if(b.classList.contains('gone'))return;
+      b.classList.add('gone');remaining--;setScore(score+1);
+      if(remaining===0){
+        if(round>=COLLECT.length)setTimeout(win,500);
+        else{setRound(round+1);setTimeout(setup,500)}
+      }
+    });
+    board.appendChild(b)
+  });
+  stage.appendChild(board)
+}
 </script></body></html>
